@@ -30,6 +30,14 @@ const PAGES = {
     "BENCH-OPEN.md": "project/bench-open",
 };
 
+/** Short sidebar labels where the page's own title is too long for the navigation. */
+const SIDEBAR_LABELS = {
+    "TMUX.md": "tmux",
+    "API-COVERAGE.md": "Extension API coverage",
+    "BENCHMARKS.md": "Startup benchmark",
+    "BENCH-OPEN.md": "File open benchmark",
+};
+
 /** Generated pages: wiped on every sync, ignored by git (.gitignore lists the same paths). */
 const GENERATED_DIRS = ["getting-started", "reference/api-coverage.md", "project"];
 
@@ -72,6 +80,7 @@ function convertPage(source, file) {
         "---",
         `title: ${yamlString(title)}`,
         `editUrl: ${yamlString(`${REPO_URL}/edit/${BRANCH}/docs/public/${file}`)}`,
+        ...(SIDEBAR_LABELS[file] ? ["sidebar:", `  label: ${yamlString(SIDEBAR_LABELS[file])}`] : []),
         "---",
         "",
     ].join("\n");
