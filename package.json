@@ -1,0 +1,17 @@
+{
+    "name": "diode-docs",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "description": "diode documentation site",
+    "scripts": {
+        "sync": "node scripts/sync-content.mjs",
+        "dev": "npm run sync && astro dev",
+        "build": "npm run sync && astro build",
+        "preview": "astro preview"
+    },
+    "dependencies": {
+        "@astrojs/starlight": "^0.42.6",
+        "astro": "^7.4.2"
+    }
+}

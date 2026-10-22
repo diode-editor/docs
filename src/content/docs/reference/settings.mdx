@@ -1,0 +1,21 @@
+---
+title: Settings
+description: Every setting diode knows, with type, default and allowed values.
+tableOfContents: false
+---
+
+import SettingsSearch from "../../../components/SettingsSearch.astro";
+
+Settings live in `settings.json`, the same file and format as in VS Code. Open it with the
+**Preferences: Open User Settings (JSON)** command, or find it on disk at
+`~/.diode/user-data/User/settings.json` (a named profile keeps its own copy under
+`User/profiles/<profile>/`; `--user-data-dir` moves the whole tree). A `.vscode/settings.json`
+in the opened folder overrides it per workspace. How settings resolve and merge is described in the
+[VS Code settings documentation](https://code.visualstudio.com/docs/configure/settings).
+
+The list below is what diode itself understands: the editor's own settings and the ones
+contributed by its builtin extensions. It is generated from the editor's source, the same catalog
+that completes keys in `settings.json`. Extensions you install add their own settings on top; a
+VS Code setting missing here has no effect in diode yet.
+
+<SettingsSearch />

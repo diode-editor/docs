@@ -1,0 +1,240 @@
+---
+// Settings catalog with filtering: every key diode knows (the app's configuration nodes and
+// contributes.configuration of the builtin extensions), the same list that completes keys in
+// settings.json. All rows are rendered statically (searchable by Pagefind too); the script only
+// hides the ones that don't match.
+import settings from "../data/settings.json";
+
+interface Setting {
+    key: string;
+    type?: string;
+    default?: unknown;
+    description?: string;
+    enum?: unknown[];
+}
+
+const rows = (settings as Setting[]).map((s) => ({
+    ...s,
+    section: s.key.split(".")[0]!,
+    defaultText: s.default === undefined ? undefined : JSON.stringify(s.default),
+    haystack: [s.key, s.description ?? "", ...(s.enum ?? []).map(String)].join(" ").toLowerCase(),
+}));
+const sections = [...new Set(rows.map((r) => r.section))].sort();
+---
+
+<div class="settings-search not-content">
+    <div class="controls">
+        <input
+            type="search"
+            class="query"
+            placeholder={`Filter ${rows.length} settings: key, description or value`}
+            aria-label="Filter settings"
+            autocomplete="off"
+            spellcheck="false"
+        />
+        <div class="sections" role="group" aria-label="Section">
+            <button type="button" data-section="" aria-pressed="true">all</button>
+            {sections.map((s) => <button type="button" data-section={s} aria-pressed="false">{s}</button>)}
+        </div>
+        <p class="count" aria-live="polite"></p>
+    </div>
+    <ul class="list">
+        {
+            rows.map((r) => (
+                <li id={r.key} data-section={r.section} data-haystack={r.haystack}>
+                    <div class="head">
+                        <a class="key" href={`#${r.key}`}>
+                            {r.key}
+                        </a>
+                        {r.type && <span class="type">{r.type}</span>}
+                    </div>
+                    {r.description && <p class="description">{r.description}</p>}
+                    <dl>
+                        {r.defaultText !== undefined && (
+                            <>
+                                <dt>default</dt>
+                                <dd>
+                                    <code>{r.defaultText}</code>
+                                </dd>
+                            </>
+                        )}
+                        {r.enum && (
+                            <>
+                                <dt>values</dt>
+                                <dd class="values">
+                                    {r.enum.map((v) => (
+                                        <code>{JSON.stringify(v)}</code>
+                                    ))}
+                                </dd>
+                            </>
+                        )}
+                    </dl>
+                </li>
+            ))
+        }
+    </ul>
+    <p class="empty" hidden>No settings match.</p>
+</div>
+
+<style>
+    .settings-search {
+        margin-top: 1.5rem;
+        font-size: 0.8125rem;
+    }
+    .controls {
+        position: sticky;
+        top: var(--sl-nav-height);
+        z-index: 2;
+        background: var(--sl-color-bg);
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border-hairline);
+    }
+    .query {
+        width: 100%;
+        font: inherit;
+        font-size: 0.875rem;
+        padding: 0.6rem 0.8rem;
+        color: var(--text-code);
+        background: var(--surface-inset);
+        border: 1px solid var(--border-strong);
+        border-radius: 0;
+    }
+    .query:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+    .sections {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.6rem;
+    }
+    .sections button {
+        font: inherit;
+        font-size: 0.75rem;
+        padding: 0.15rem 0.6rem;
+        background: none;
+        color: var(--text-muted);
+        border: 1px solid var(--border-chrome);
+        cursor: pointer;
+    }
+    .sections button:hover {
+        color: var(--text-strong);
+    }
+    .sections button[aria-pressed="true"] {
+        color: var(--accent);
+        border-color: var(--accent);
+    }
+    .count {
+        margin-top: 0.5rem;
+        color: var(--text-faint);
+        font-size: 0.75rem;
+    }
+    .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .list li {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-hairline);
+        scroll-margin-top: calc(var(--sl-nav-height) + 9rem);
+    }
+    .list li:target {
+        background: var(--accent-tint);
+        box-shadow: 0 0 0 0.75rem var(--accent-tint);
+    }
+    .head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.75rem;
+    }
+    .key {
+        color: var(--text-strong);
+        font-weight: 700;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+    }
+    .key:hover {
+        color: var(--accent);
+    }
+    .type {
+        color: var(--accent);
+        font-size: 0.75rem;
+    }
+    .description {
+        margin: 0.35rem 0 0;
+        color: var(--text-body);
+        line-height: 1.65;
+    }
+    dl {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.25rem 1rem;
+        margin: 0.5rem 0 0;
+    }
+    dt {
+        color: var(--text-faint);
+    }
+    dd {
+        margin: 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+    }
+    code {
+        color: var(--text-code);
+        background: var(--surface-inset);
+        border: 1px solid var(--border-hairline);
+        padding: 0 0.3em;
+    }
+    .empty {
+        padding: 2rem 0;
+        color: var(--text-muted);
+    }
+</style>
+
+<script>
+    const root = document.querySelector<HTMLElement>(".settings-search")!;
+    const query = root.querySelector<HTMLInputElement>(".query")!;
+    const count = root.querySelector<HTMLElement>(".count")!;
+    const empty = root.querySelector<HTMLElement>(".empty")!;
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>(".sections button")];
+    const items = [...root.querySelectorAll<HTMLLIElement>(".list li")];
+    let section = "";
+
+    const apply = () => {
+        const words = query.value.toLowerCase().split(/\s+/).filter(Boolean);
+        let shown = 0;
+        for (const item of items) {
+            const visible =
+                (section === "" || item.dataset.section === section) &&
+                words.every((w) => item.dataset.haystack!.includes(w));
+            item.hidden = !visible;
+            if (visible) shown++;
+        }
+        count.textContent = `${shown} of ${items.length}`;
+        empty.hidden = shown > 0;
+        // Shareable filter: /reference/settings/?q=font
+        const url = new URL(location.href);
+        if (query.value) url.searchParams.set("q", query.value);
+        else url.searchParams.delete("q");
+        history.replaceState(null, "", url);
+    };
+
+    for (const button of buttons) {
+        button.addEventListener("click", () => {
+            section = button.dataset.section!;
+            for (const b of buttons) b.setAttribute("aria-pressed", String(b === button));
+            apply();
+        });
+    }
+    query.addEventListener("input", apply);
+    query.value = new URLSearchParams(location.search).get("q") ?? "";
+    apply();
+</script>

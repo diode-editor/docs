@@ -1,0 +1,177 @@
+/* diode Design System tokens, the same values as the landing page (diode-editor.github.io
+   index.html) and the marketplace; Starlight's palette is mapped onto them below. */
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 100 800;
+    font-display: swap;
+    /* The landing page's file, copied: the site doesn't depend on the root being deployed. */
+    src: url("/docs/jetbrains-mono-latin.woff2") format("woff2");
+}
+
+:root {
+    --surface-canvas: #1e1e1e;
+    --surface-chrome: #252526;
+    --surface-inset: #252526;
+    --border-hairline: #2d2d2d;
+    --border-chrome: #333333;
+    --border-strong: #3c3c3c;
+    --text-display: #f0f0f0;
+    --text-strong: #e7e7e7;
+    --text-code: #d4d4d4;
+    --text-body: #b4b4b4;
+    --text-muted: #858585;
+    --text-faint: #5a5a5a;
+    --accent: #569cd6;
+    --accent-fill: #0e639c;
+    --accent-fill-ink: #ffffff;
+    --accent-tint: #04395e;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* Layout: the landing page's column, split as in the VS Code docs. */
+    --page-max: 1080px;
+    --sidebar-width: 220px;
+    --outline-width: 200px;
+}
+
+:root[data-theme="light"] {
+    --surface-canvas: #ffffff;
+    --surface-chrome: #f3f3f3;
+    --surface-inset: #f8f8f8;
+    --border-hairline: #e5e5e5;
+    --border-chrome: #e0e0e0;
+    --border-strong: #d4d4d4;
+    --text-display: #111111;
+    --text-strong: #1f1f1f;
+    --text-code: #1f1f1f;
+    --text-body: #3b3b3b;
+    --text-muted: #616161;
+    --text-faint: #b0b0b0;
+    --accent: #0066b8;
+    --accent-fill: #0066b8;
+    --accent-tint: #dbeafa;
+}
+
+:root,
+:root[data-theme="light"] {
+    --sl-font: var(--font-mono);
+    --sl-font-mono: var(--font-mono);
+    --sl-text-body: 0.875rem;
+    --sl-text-code: 0.8125rem;
+    --sl-text-h1: 1.75rem;
+    --sl-text-h2: 1.375rem;
+    --sl-text-h3: 1.125rem;
+    --sl-text-h4: 1rem;
+    --sl-line-height: 1.75;
+    /* The landing page's header: 52px plus the 1px hairline. */
+    --sl-nav-height: 53px;
+    --sl-content-width: 100%;
+    --sl-content-pad-x: 2rem;
+    /* The frame is centered, nothing is offset from the viewport edge. */
+    --sl-content-inline-start: 0rem !important;
+
+    --sl-color-accent-low: var(--accent-tint);
+    --sl-color-accent: var(--accent-fill);
+    --sl-color-accent-high: var(--accent);
+    --sl-color-white: var(--text-display);
+    --sl-color-gray-1: var(--text-strong);
+    --sl-color-gray-2: var(--text-body);
+    --sl-color-gray-3: var(--text-muted);
+    --sl-color-gray-4: var(--text-faint);
+    --sl-color-gray-5: var(--border-strong);
+    --sl-color-gray-6: var(--surface-chrome);
+    --sl-color-black: var(--surface-canvas);
+
+    --sl-color-text: var(--text-body);
+    --sl-color-text-accent: var(--accent);
+    --sl-color-text-invert: var(--accent-fill-ink);
+    --sl-color-bg: var(--surface-canvas);
+    --sl-color-bg-nav: var(--surface-chrome);
+    --sl-color-bg-sidebar: var(--surface-canvas);
+    --sl-color-bg-inline-code: var(--surface-inset);
+    --sl-color-bg-accent: var(--accent-fill);
+    --sl-color-hairline-light: var(--border-chrome);
+    --sl-color-hairline: var(--border-hairline);
+    --sl-color-hairline-shade: var(--surface-canvas);
+}
+
+/* The landing page is square: no rounded corners anywhere. */
+.sl-markdown-content :is(pre, code, table, img),
+.sidebar-content a,
+site-search button,
+.pagination-links a,
+.starlight-aside {
+    border-radius: 0 !important;
+}
+
+/* Headings in the landing page's voice: display color, tight tracking. */
+.sl-markdown-content :is(h1, h2, h3, h4),
+h1#_top {
+    color: var(--text-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.sl-markdown-content a {
+    color: var(--accent);
+    text-decoration: none;
+}
+.sl-markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.sl-markdown-content :not(pre) > code {
+    border: 1px solid var(--border-hairline);
+    padding: 0.05em 0.35em;
+    color: var(--text-code);
+}
+
+/* Wide matrices (API coverage, benchmarks) scroll inside the table, not the page. */
+.sl-markdown-content table {
+    display: block;
+    overflow-x: auto;
+    font-size: 0.8125rem;
+}
+.sl-markdown-content th {
+    color: var(--text-strong);
+    background: var(--surface-chrome);
+}
+
+.sidebar-content {
+    font-size: 0.8125rem;
+}
+.sidebar-content .large {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+}
+.sidebar-content a[aria-current="page"] {
+    background: var(--accent-tint);
+    color: var(--text-strong);
+    font-weight: 500;
+}
+
+/* The outline: a column of the frame on wide screens (TwoColumnContent.astro), Starlight's
+   dropdown in the page flow below 72rem instead of a bar fixed to the viewport. */
+.right-sidebar-panel {
+    padding: 1.5rem 0 1.5rem 1.25rem !important;
+}
+.right-sidebar-panel .sl-container {
+    width: auto !important;
+}
+mobile-starlight-toc nav {
+    position: static;
+}
+@media (max-width: 49.99rem) {
+    :root {
+        --sl-content-pad-x: 24px;
+    }
+}
+
+::selection {
+    background: var(--accent-fill);
+    color: var(--accent-fill-ink);
+}

@@ -1,0 +1,24 @@
+---
+// Theme shared with the landing page and the marketplace: the "theme" key in localStorage is
+// common to the whole domain and holds system | dark | light. Starlight's CSS needs a resolved
+// data-theme on <html>, so "system" is resolved here from prefers-color-scheme.
+---
+
+<script is:inline>
+    window.StarlightThemeProvider = (() => {
+        let stored = null;
+        try {
+            stored = localStorage.getItem("theme");
+        } catch {}
+        const mode = stored === "dark" || stored === "light" ? stored : "system";
+        const resolve = (m) =>
+            m === "system" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : m;
+        document.documentElement.dataset.theme = resolve(mode);
+        return {
+            mode,
+            resolve,
+            // Starlight's own components call this; the toggle renders itself.
+            updatePickers() {},
+        };
+    })();
+</script>

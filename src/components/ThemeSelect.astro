@@ -1,0 +1,54 @@
+---
+// The landing page's "theme: <mode>" toggle: system → dark → light.
+---
+
+<button type="button" class="theme-toggle">theme: system</button>
+
+<style>
+    .theme-toggle {
+        font-family: inherit;
+        font-size: 11.5px;
+        letter-spacing: 0.06em;
+        padding: 6px 12px;
+        border: 1px solid var(--border-strong);
+        border-radius: 0;
+        background: var(--surface-chrome);
+        color: var(--text-muted);
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .theme-toggle:hover {
+        color: var(--text-strong);
+        border-color: var(--accent);
+    }
+</style>
+
+<script>
+    type Mode = "system" | "dark" | "light";
+    const modes: Mode[] = ["system", "dark", "light"];
+    const provider = (window as unknown as { StarlightThemeProvider: { mode: Mode; resolve(m: Mode): string } })
+        .StarlightThemeProvider;
+    let mode: Mode = provider.mode;
+
+    const render = () => {
+        for (const toggle of document.querySelectorAll<HTMLButtonElement>(".theme-toggle")) {
+            toggle.textContent = "theme: " + mode;
+        }
+    };
+    const apply = (next: Mode) => {
+        mode = next;
+        document.documentElement.dataset.theme = provider.resolve(mode);
+        try {
+            localStorage.setItem("theme", mode);
+        } catch {}
+        render();
+    };
+
+    for (const toggle of document.querySelectorAll<HTMLButtonElement>(".theme-toggle")) {
+        toggle.addEventListener("click", () => apply(modes[(modes.indexOf(mode) + 1) % modes.length]!));
+    }
+    matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+        if (mode === "system") apply("system");
+    });
+    render();
+</script>

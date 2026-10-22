@@ -1,0 +1,58 @@
+name: Deploy
+
+# Builds the docs site and publishes it to GitHub Pages at diode-editor.github.io/docs/.
+# The content lives in the editor repository (docs/public and the settings catalog), so the site
+# is rebuilt not only on pushes here but also when the editor's main changes it: diode's
+# docs-site.yml dispatches this workflow; the daily schedule is a fallback if that dispatch fails.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: diode-editor/diode
+          path: diode
+          sparse-checkout: |
+            docs/public
+            extensions/diode-settings
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

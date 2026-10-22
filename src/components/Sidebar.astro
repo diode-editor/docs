@@ -1,0 +1,21 @@
+---
+// Search on top of the navigation, as in the VS Code docs; the header stays the landing page's.
+import Default from "@astrojs/starlight/components/Sidebar.astro";
+import Search from "virtual:starlight/components/Search";
+---
+
+<div class="sidebar-search">
+    <Search />
+</div>
+<Default />
+
+<style>
+    .sidebar-search {
+        display: flex;
+    }
+    .sidebar-search :global(site-search),
+    .sidebar-search :global(button[data-open-modal]) {
+        width: 100%;
+        max-width: none;
+    }
+</style>

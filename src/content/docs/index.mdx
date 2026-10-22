@@ -1,0 +1,35 @@
+---
+title: diode documentation
+description: Documentation for diode, a non-modal editor for the terminal with VS Code keybindings, LSP and VS Code extensions.
+editUrl: false
+tableOfContents: false
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+diode is a non-modal editor for the terminal. It follows VS Code: the same keybindings, the same
+`settings.json`, the same extension API. These pages cover what is specific to diode; for
+everything that works the same way, they link to the VS Code documentation.
+
+diode is in **alpha**: usable every day, while the extension API surface and the tools are still
+growing. See the [roadmap](project/roadmap/).
+
+## Start here
+
+<CardGrid>
+    <LinkCard title="Install" description="One command, npm, Homebrew, apt, winget or a nightly build." href="getting-started/install/" />
+    <LinkCard title="diode in tmux" description="Extended keys and the window title inside tmux." href="getting-started/tmux/" />
+    <LinkCard title="Settings" description="Search every setting diode understands." href="reference/settings/" />
+    <LinkCard title="Extension API coverage" description="Which parts of the VS Code extension API work in diode." href="reference/api-coverage/" />
+</CardGrid>
+
+## Same as in VS Code
+
+These work as in VS Code, so the VS Code documentation applies as is.
+
+<CardGrid>
+    <LinkCard title="Keyboard shortcuts" description="Default keybindings and keybindings.json." href="https://code.visualstudio.com/docs/configure/keybindings" />
+    <LinkCard title="Settings" description="User and workspace settings, settings.json." href="https://code.visualstudio.com/docs/configure/settings" />
+    <LinkCard title="Extension API" description="Writing extensions; check the coverage matrix for what diode supports." href="https://code.visualstudio.com/api" />
+    <LinkCard title="Tasks" description="tasks.json and task providers." href="https://code.visualstudio.com/docs/debugtest/tasks" />
+</CardGrid>

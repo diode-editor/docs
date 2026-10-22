@@ -1,0 +1,39 @@
+---
+// The page and its outline as two columns inside the centered frame (PageFrame.astro). Below
+// 72rem the outline collapses into Starlight's "On this page" dropdown above the page.
+---
+
+<div class="two-col">
+    {
+        Astro.locals.starlightRoute.toc && (
+            <aside class="outline print:hidden">
+                <slot name="right-sidebar" />
+            </aside>
+        )
+    }
+    <div class="main-pane"><slot /></div>
+</div>
+
+<style>
+    .main-pane {
+        isolation: isolate;
+        min-width: 0;
+    }
+    .outline {
+        position: sticky;
+        top: var(--sl-nav-height);
+        z-index: var(--sl-z-index-toc);
+    }
+    @media (min-width: 72rem) {
+        .two-col {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) var(--outline-width);
+        }
+        .outline {
+            order: 2;
+            height: calc(100vh - var(--sl-nav-height));
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+    }
+</style>
