@@ -8,6 +8,13 @@ export default defineConfig({
     site: "https://diode-editor.github.io",
     base: "/docs",
     trailingSlash: "always",
+    // Old slugs from the first version of the site; the content moved or merged.
+    redirects: {
+        "/getting-started/tmux/": "/docs/getting-started/terminal/#tmux",
+        "/reference/api-coverage/": "/docs/extensions/api-coverage/",
+        "/project/benchmarks/": "/docs/project/performance/",
+        "/project/bench-open/": "/docs/project/performance/",
+    },
     integrations: [
         starlight({
             title: "diode docs",
@@ -31,15 +38,24 @@ export default defineConfig({
                 { label: "Overview", link: "/" },
                 {
                     label: "Getting started",
-                    items: ["getting-started/install", "getting-started/tmux"],
+                    items: [
+                        "getting-started/install",
+                        "getting-started/first-run",
+                        "getting-started/keyboard",
+                        "getting-started/terminal",
+                    ],
+                },
+                {
+                    label: "Extensions",
+                    items: ["extensions/install", "extensions/api-coverage"],
                 },
                 {
                     label: "Reference",
-                    items: ["reference/settings", "reference/api-coverage"],
+                    items: ["reference/settings"],
                 },
                 {
                     label: "Project",
-                    items: ["project/roadmap", "project/benchmarks", "project/bench-open"],
+                    items: ["project/roadmap", "project/performance"],
                 },
             ],
         }),

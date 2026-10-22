@@ -7,4 +7,4 @@ dist/
 src/data/settings.json
 src/content/docs/getting-started/
 src/content/docs/project/
-src/content/docs/reference/api-coverage.md
+src/content/docs/extensions/

@@ -23,23 +23,25 @@ const BRANCH = "main";
 /** docs/public file → site slug (also the sidebar entry in astro.config.mjs). */
 const PAGES = {
     "INSTALL.md": "getting-started/install",
-    "TMUX.md": "getting-started/tmux",
-    "API-COVERAGE.md": "reference/api-coverage",
+    "FIRST-RUN.md": "getting-started/first-run",
+    "KEYBOARD.md": "getting-started/keyboard",
+    "TERMINAL.md": "getting-started/terminal",
+    "EXTENSIONS.md": "extensions/install",
+    "API-COVERAGE.md": "extensions/api-coverage",
     "ROADMAP.md": "project/roadmap",
-    "BENCHMARKS.md": "project/benchmarks",
-    "BENCH-OPEN.md": "project/bench-open",
+    "PERFORMANCE.md": "project/performance",
 };
 
 /** Short sidebar labels where the page's own title is too long for the navigation. */
 const SIDEBAR_LABELS = {
-    "TMUX.md": "tmux",
-    "API-COVERAGE.md": "Extension API coverage",
-    "BENCHMARKS.md": "Startup benchmark",
-    "BENCH-OPEN.md": "File open benchmark",
+    "KEYBOARD.md": "Keyboard",
+    "TERMINAL.md": "Terminal setup",
+    "EXTENSIONS.md": "Installing extensions",
+    "API-COVERAGE.md": "API coverage (for extension authors)",
 };
 
 /** Generated pages: wiped on every sync, ignored by git (.gitignore lists the same paths). */
-const GENERATED_DIRS = ["getting-started", "reference/api-coverage.md", "project"];
+const GENERATED_DIRS = ["getting-started", "extensions", "project"];
 
 function findDiode() {
     const candidates = [process.env.DIODE_DIR, join(ROOT, "diode"), join(ROOT, "..", "diode")];
