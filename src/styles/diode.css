@@ -96,6 +96,11 @@
     --sl-color-hairline-shade: var(--surface-canvas);
 }
 
+/* Starlight sizes the body with a viewport clamp up to 1rem; monospace reads wide, so pin it. */
+.sl-markdown-content {
+    font-size: var(--sl-text-body);
+}
+
 /* The landing page is square: no rounded corners anywhere. */
 .sl-markdown-content :is(pre, code, table, img),
 .sidebar-content a,
