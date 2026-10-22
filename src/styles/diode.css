@@ -30,9 +30,9 @@
     --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
     /* Layout: the landing page's column, split as in the VS Code docs. */
-    --page-max: 1080px;
-    --sidebar-width: 220px;
-    --outline-width: 200px;
+    --page-max: 1400px;
+    --sidebar-width: 240px;
+    --outline-width: 220px;
 }
 
 :root[data-theme="light"] {
@@ -57,13 +57,13 @@
 :root[data-theme="light"] {
     --sl-font: var(--font-mono);
     --sl-font-mono: var(--font-mono);
-    --sl-text-body: 0.875rem;
-    --sl-text-code: 0.8125rem;
-    --sl-text-h1: 1.75rem;
-    --sl-text-h2: 1.375rem;
-    --sl-text-h3: 1.125rem;
-    --sl-text-h4: 1rem;
-    --sl-line-height: 1.75;
+    --sl-text-body: 0.8125rem;
+    --sl-text-code: 0.75rem;
+    --sl-text-h1: 1.625rem;
+    --sl-text-h2: 1.25rem;
+    --sl-text-h3: 1.0625rem;
+    --sl-text-h4: 0.9375rem;
+    --sl-line-height: 1.7;
     /* The landing page's header: 52px plus the 1px hairline. */
     --sl-nav-height: 53px;
     --sl-content-width: 100%;
@@ -131,7 +131,7 @@ h1#_top {
 .sl-markdown-content table {
     display: block;
     overflow-x: auto;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
 }
 .sl-markdown-content th {
     color: var(--text-strong);
