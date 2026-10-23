@@ -24,11 +24,12 @@ const BRANCH = "main";
 const PAGES = {
     "INSTALL.md": "getting-started/install",
     "FIRST-RUN.md": "getting-started/first-run",
+    "DIFFERENCES.md": "getting-started/differences",
     "KEYBOARD.md": "getting-started/keyboard",
     "TERMINAL.md": "getting-started/terminal",
     "EXTENSIONS.md": "extensions/install",
     "API-COVERAGE.md": "extensions/api-coverage",
-    "ROADMAP.md": "project/roadmap",
+    "STATUS.md": "project/status",
     "PERFORMANCE.md": "project/performance",
 };
 

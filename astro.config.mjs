@@ -14,6 +14,7 @@ export default defineConfig({
         "/reference/api-coverage/": "/docs/extensions/api-coverage/",
         "/project/benchmarks/": "/docs/project/performance/",
         "/project/bench-open/": "/docs/project/performance/",
+        "/project/roadmap/": "/docs/project/status/",
     },
     integrations: [
         starlight({
@@ -41,6 +42,7 @@ export default defineConfig({
                     items: [
                         "getting-started/install",
                         "getting-started/first-run",
+                        "getting-started/differences",
                         "getting-started/keyboard",
                         "getting-started/terminal",
                     ],
@@ -55,7 +57,7 @@ export default defineConfig({
                 },
                 {
                     label: "Project",
-                    items: ["project/roadmap", "project/performance"],
+                    items: ["project/status", "project/performance"],
                 },
             ],
         }),
