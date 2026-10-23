@@ -13,8 +13,29 @@ interface Setting {
     enum?: unknown[];
 }
 
+type Part = { kind: "text" | "code" | "ref"; value: string };
+const keys = new Set((settings as Setting[]).map((s) => s.key));
+
+/** Descriptions carry VS Code's markdown subset: `code` spans and `#other.key#` references. */
+function parseDescription(text: string): Part[] {
+    const parts: Part[] = [];
+    const re = /`([^`]+)`|#([A-Za-z0-9_.-]+)#/g;
+    let last = 0;
+    for (let m = re.exec(text); m; m = re.exec(text)) {
+        if (m.index > last) parts.push({ kind: "text", value: text.slice(last, m.index) });
+        // VS Code writes a reference as `#key#` inside a code span; both spellings link the key.
+        const ref = m[2] ?? /^#([A-Za-z0-9_.-]+)#$/.exec(m[1]!)?.[1];
+        if (ref !== undefined) parts.push({ kind: keys.has(ref) ? "ref" : "code", value: ref });
+        else parts.push({ kind: "code", value: m[1]! });
+        last = re.lastIndex;
+    }
+    if (last < text.length) parts.push({ kind: "text", value: text.slice(last) });
+    return parts;
+}
+
 const rows = (settings as Setting[]).map((s) => ({
     ...s,
+    parts: parseDescription(s.description ?? ""),
     section: s.key.split(".")[0]!,
     defaultText: s.default === undefined ? undefined : JSON.stringify(s.default),
     haystack: [s.key, s.description ?? "", ...(s.enum ?? []).map(String)].join(" ").toLowerCase(),
@@ -48,7 +69,21 @@ const sections = [...new Set(rows.map((r) => r.section))].sort();
                         </a>
                         {r.type && <span class="type">{r.type}</span>}
                     </div>
-                    {r.description && <p class="description">{r.description}</p>}
+                    {r.description && (
+                        <p class="description">
+                            {r.parts.map((p) =>
+                                p.kind === "code" ? (
+                                    <code>{p.value}</code>
+                                ) : p.kind === "ref" ? (
+                                    <a href={`#${p.value}`}>
+                                        <code>{p.value}</code>
+                                    </a>
+                                ) : (
+                                    p.value
+                                ),
+                            )}
+                        </p>
+                    )}
                     <dl>
                         {r.defaultText !== undefined && (
                             <>

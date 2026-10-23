@@ -7,22 +7,23 @@ tableOfContents: false
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-diode is a non-modal editor for the terminal. It follows VS Code: the same keybindings, the same
+Diode is a non-modal editor for the terminal. It follows VS Code: the same keybindings, the same
 `settings.json`, the same extension API. These pages cover what is specific to diode; for
 everything that works the same way, they link to the VS Code documentation.
 
-diode is in **alpha**: usable every day, while the extension API surface and the tools are still
-growing. See the [roadmap](project/roadmap/).
+Diode is in **alpha**: usable every day, with gaps. [Status](project/status/) lists what is missing
+and what is planned.
 
 ## Start here
 
 <CardGrid>
     <LinkCard title="Install" description="One command, npm, Homebrew, apt, winget or a nightly build." href="getting-started/install/" />
     <LinkCard title="First run" description="Open a folder, find your way around, quit. Where settings live." href="getting-started/first-run/" />
+    <LinkCard title="Differences from VS Code" description="What a terminal changes and what Diode does differently on purpose, in one place." href="getting-started/differences/" />
     <LinkCard title="Keyboard" description="Which VS Code shortcuts a terminal can't deliver, and what to press instead." href="getting-started/keyboard/" />
     <LinkCard title="Terminal setup" description="Colors, keys, clipboard over ssh, tmux." href="getting-started/terminal/" />
     <LinkCard title="Extensions" description="Install languages and tools from the store; what works and what can't." href="extensions/install/" />
-    <LinkCard title="Settings" description="Search every setting diode understands." href="reference/settings/" />
+    <LinkCard title="Settings" description="Search every setting Diode understands." href="reference/settings/" />
 </CardGrid>
 
 ## Same as in VS Code
@@ -32,6 +33,6 @@ These work as in VS Code, so the VS Code documentation applies as is.
 <CardGrid>
     <LinkCard title="Keyboard shortcuts" description="Default keybindings and keybindings.json." href="https://code.visualstudio.com/docs/configure/keybindings" />
     <LinkCard title="Settings" description="User and workspace settings, settings.json." href="https://code.visualstudio.com/docs/configure/settings" />
-    <LinkCard title="Extension API" description="Writing extensions; check the coverage matrix for what diode supports." href="https://code.visualstudio.com/api" />
+    <LinkCard title="Extension API" description="Writing extensions; check the coverage matrix for what Diode supports." href="https://code.visualstudio.com/api" />
     <LinkCard title="Tasks" description="tasks.json and task providers." href="https://code.visualstudio.com/docs/debugtest/tasks" />
 </CardGrid>
